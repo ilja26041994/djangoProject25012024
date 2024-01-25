@@ -5,8 +5,14 @@ from django.db import models
 class CarType(models.Model):
     name = models.CharField(max_length=255)
 
+    class Meta:
+        ordering = ['name']
+
 class CarBrand(models.Model):
     name = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ['name']
 
 class Car(models.Model):
     car_number = models.CharField(max_length=255)
@@ -19,6 +25,11 @@ class ParkingSlot(models.Model):
     is_free = models.BooleanField(default=True)
     number = models.IntegerField()
     car = models.OneToOneField(Car, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        ordering = ['number']
+
+
 
 class Parking(models.Model):
     name = models.CharField(max_length=255)
