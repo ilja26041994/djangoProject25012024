@@ -101,12 +101,19 @@ def initialaze(request):
             car_type.save()
         for car_brand in car_brands:
             car_brand.save()
+        for i in range(1,11):
+            car = Car(car_number=f'AA{i}AA{i}',car_type=car_types[0],car_brand=car_brands[0],is_electric=False,year=2000)
+            car.save()
         for park in parks:
             park.save()
-        for park_slot_1 in park_slots_1:
-            park_slot_1.save()
-        for park_slot_2 in park_slots_2:
-            park_slot_2.save()
+        for slot in park_slots_1:
+            slot.save()
+            slot.parking = parks[0]
+            slot.save()
+        for slot in park_slots_2:
+            slot.save()
+            slot.parking = parks[1]
+            slot.save()
         for car in cars:
             car.save()
 
@@ -114,3 +121,11 @@ def initialaze(request):
 
     except:
         return HttpResponse('Error')
+
+def get_cars(request):
+    cars = Car.objects.all()
+    return render(request,'autopark/cars.html',{'cars':cars})
+
+def get_car_by_id(request, car_id):
+    car = Car.objects.get(id=car_id)
+    return render(request,'autopark/get_car_by_id.html',{'car':car})
